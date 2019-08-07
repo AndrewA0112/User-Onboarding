@@ -20,23 +20,23 @@ const RegisterForm = ({ errors, touched, values, status }) => {
         <div>
             <h1>Register</h1>
             <Form className='registerForm'>
-                <Field type='text' name='username' placeholder='Username'/>
+                <Field type='text' name='username' placeholder='Username' className='registerFormField'/>
                 {touched.username && errors.username && (
-                    <p>{errors.username}</p>
+                    <p className='errorMessage'>{errors.username}</p>
                 )}
-                <Field type='email' name='email' placeholder='Email'/>
+                <Field type='email' name='email' placeholder='Email' className='registerFormField'/>
                 {touched.email && errors.email && (
-                    <p>{errors.email}</p>
+                    <p className='errorMessage'>{errors.email}</p>
                 )}
-                <Field type='password' name='password' placeholder='Password'/>
+                <Field type='password' name='password' placeholder='Password' className='registerFormField'/>
                 {touched.password && errors.password && (
-                    <p>{errors.password}</p>
+                    <p className='errorMessage'>{errors.password}</p>
                 )}
-                <label>
+                <label className='registerFormField'>
                     <Field type='checkbox' name='tos' checked={values.tos}/>
                     Accept TOS
                     {touched.tos && errors.tos && (
-                    <p>{errors.tos}</p>
+                    <p className='errorMessage'>{errors.tos}</p>
                     )}
                 </label>
                 <button type='submit'>Login</button>
@@ -61,18 +61,19 @@ const FormikRegisterForm = withFormik({
     },
 
     validationSchema: Yup.object().shape({
-        username: Yup.string().required('Username field is required'),
-        email: Yup.string().email().required('Email field is required'),
-        password: Yup.string().min(6, 'Password must be 6 characters or longer').required('Password field is required'),
-        tos: Yup.boolean().oneOf([true], 'Oppsie')
+        username: Yup.string().required('Username is a required field'),
+        email: Yup.string().email().required('Email is a required field'),
+        password: Yup.string().min(6, 'Password must be 6 characters or longer').required('Password is a required field'),
+        tos: Yup.boolean().oneOf([true], 'Please accept our TOS')
     }),
 
-    handleSubmit(values, {setStatus}) {
+    handleSubmit(values, {setStatus, resetForm}) {
         console.log(values)
         axios
             .post('https://reqres.in/api/users/', values)
             .then(response => {
                 setStatus(response.data)
+                resetForm();
             })
             .catch(error => {
                 console.log(error.response)
