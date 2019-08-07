@@ -1,0 +1,27 @@
+.registerForm {
+    border: black 1px solid;
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    margin: 0 auto;
+    box-shadow: 1px 1px black;
+
+    .registerFormField {
+        padding: 20px;
+        margin: 2px;
+    }
+
+    button {
+        background: none;
+        padding: 20px;
+        margin: 2px;
+
+        &:hover {
+            background: lightgray;
+        }
+    }
+
+    .errorMessage {
+        color: red;
+    }
+}
